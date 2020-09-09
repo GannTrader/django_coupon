@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<table class="table table-striped">
+	    <thead>
+	      <tr>
+	        <th>Product</th>
+	        <th>Price</th>
+	        <th>Quantity</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+    	{% for item in cart %}
+	      <tr>
+	        <td>{{item.product}}</td>
+	        <td>{{item.price}}</td>
+	        <td>{{item.quantity}}</td>
+	      </tr>
+      	{% endfor %}
+	    </tbody>
+	  </table>
+	  
+	  <p class="font-weight-bold">Use coupon: <input type="text" class="form-control" id="coupon-code"><button class="btn btn-success" onclick="CheckCoupon()">Check valid</button></p>
+	  
+		<div id="reload">
+		  	{% if messages %}
+		  	{% for message in messages %}
+		  	<div class="alert alert-{{message.tags}} alert-dismissible">
+			  <button type="button" class="close" data-dismiss="alert">&times;</button>
+			  <strong>{{message}}!</strong>
+			</div>
+			{% endfor %}
+			{% endif %}
+		  <p class="font-weight-bold">Total: ${{total|floatformat:2}}</p>
+		</div>
+
+	  <a class="btn btn-danger" href="{% url 'sales:payment' %}">Go to Payment</a>
+{% endblock %}
