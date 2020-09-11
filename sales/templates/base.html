@@ -19,10 +19,7 @@
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
-<body>
-
-	
-
+<body  id="demo">
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
 	  <!-- Brand -->
 	  <a class="navbar-brand" href="/">Navbar</a>
@@ -66,8 +63,7 @@
 			$.post("{% url 'sales:view-cart' %}", 
 	  			{'coupon_code': coupon_code, 'csrfmiddlewaretoken': '{{csrf_token}}' }, 
 	  			function(data){
-	  				//nếu trả về kiểu này thì gs người ta nhập sai coupon thì nó sẽ trả về nhiều lần quá phải tìm cách lưu lại giá trị đơn hàng sau khi có coupon vào localstorage 
-	  				document.write(data);
+	  				document.getElementById("demo").innerHTML = data;
 	  		});
 		}
 	</script>
