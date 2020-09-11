@@ -20,9 +20,12 @@ def add_to_cart(request, id):
 			price = product.price,
 			)
 		cart.save()
+		messages.info(request, 'Sản phẩm vừa được thêm vào giỏ')
 	else:
 		check_cart.update(quantity = int(Cart.objects.get(user = request.user, product = product).quantity) + 1)
+		messages.info(request, 'Sản phẩm vừa được tăng thêm số lượng + 1')
 	return redirect('sales:index')
+
 
 def view_cart(request):
 	total = 0
@@ -37,9 +40,9 @@ def view_cart(request):
 		if check_code.exists():
 			sale_off = Discount.objects.get(code = request.POST.get('coupon_code')).percent
 			total = total * (1 - sale_off)
-			messages.success('Bạn được giảm ')
+			messages.success(request, f'Bạn được giảm {sale_off * 100}% còn ${total}')
 		else:
-			messages.info('code không tồn tại hoặc hết hạn!')
+			messages.info(request, 'code không tồn tại hoặc hết hạn!')
 
 	return render(request, 'cart.html', {'cart': cart, 'total': total})
 

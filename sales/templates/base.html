@@ -20,6 +20,9 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+
+	
+
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
 	  <!-- Brand -->
 	  <a class="navbar-brand" href="/">Navbar</a>
@@ -41,15 +44,21 @@
 	    </ul>
 	  </div>
 	</nav>
+
+	{% if messages %}
+	  	{% for message in messages %}
+	  	<div class="alert alert-{{message.tags}} alert-dismissible">
+		  <button type="button" class="close" data-dismiss="alert">&times;</button>
+		  <strong>{{message}}!</strong>
+		</div>
+		{% endfor %}
+	{% endif %}
 	<div class="container">
 		{% block content %}
 		
 		{% endblock %}
 	</div>
 	<script>
-		function addtocart(id){
-			alert('id sản phẩm là ' + id);
-		}
 
 		function CheckCoupon(){
 			var coupon_code = $("#coupon-code").val();
@@ -57,7 +66,8 @@
 			$.post("{% url 'sales:view-cart' %}", 
 	  			{'coupon_code': coupon_code, 'csrfmiddlewaretoken': '{{csrf_token}}' }, 
 	  			function(data){
-	  				$("#reload").load();
+	  				//nếu trả về kiểu này thì gs người ta nhập sai coupon thì nó sẽ trả về nhiều lần quá phải tìm cách lưu lại giá trị đơn hàng sau khi có coupon vào localstorage 
+	  				document.write(data);
 	  		});
 		}
 	</script>
